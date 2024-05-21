@@ -1,0 +1,71 @@
+{
+    "name": "exewen/cdiscount-php-sdk",
+    "description": "A cdiscount-php-sdk component for Exewen.",
+    "authors": [
+        {
+            "name": "exewen",
+            "email": "exeweb@163.com"
+        }
+    ],
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "php",
+        "exewen",
+        "nacos"
+    ],
+    "require": {
+        "php": ">=7.4",
+        "exewen/http": "dev-develop",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7 | ^6.5 | ^7.5 | ^8.4 | ^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Exewen\\Cdiscount\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ExewenTest\\Cdiscount\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        },
+        "exewen": {
+            "config": "Exewen\\Cdiscount\\ConfigRegister"
+        }
+    }
+
+    ,"repositories": {
+        "exewen/utils": {
+            "type": "path",
+            "url": "../utils"
+        },
+        "exewen/config": {
+            "type": "path",
+            "url": "../config"
+        },
+        "exewen/di": {
+            "type": "path",
+            "url": "../di"
+        },
+        "exewen/logger": {
+            "type": "path",
+            "url": "../logger"
+        },
+        "exewen/http": {
+            "type": "path",
+            "url": "../http"
+        }
+    }
+
+}
