@@ -33,7 +33,7 @@ class ConfigRegister
                         'connect_timeout' => 3,
                         'timeout'         => 10,
                         'handler'         => [
-                            LogMiddleware::class,
+//                            LogMiddleware::class,
                         ]
                     ],
                     'cdiscount_api'  => [
@@ -46,7 +46,7 @@ class ConfigRegister
                         'timeout'         => 20,
                         'handler'         => [
                             AuthMiddleware::class,
-                            LogMiddleware::class,
+//                            LogMiddleware::class,
                         ],
                         'extra'           => [
                             'access_token' => null,
