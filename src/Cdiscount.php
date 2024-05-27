@@ -4,88 +4,68 @@ declare(strict_types=1);
 
 namespace Exewen\Cdiscount;
 
-
-use Exewen\Nacos\Contract\CdiscountInterface;
-use Exewen\Nacos\Services\ConfigService;
-use Exewen\Nacos\Services\InstanceService;
+use Exewen\Cdiscount\Contract\CdiscountInterface;
+use Exewen\Cdiscount\Exception\CdiscountException;
+use Exewen\Cdiscount\Services\AuthService;
+use Exewen\Cdiscount\Services\OrdersService;
+use Exewen\Cdiscount\Services\FinanceService;
+use Exewen\Config\Contract\ConfigInterface;
 
 class Cdiscount implements CdiscountInterface
 {
+    private $config;
+    private $authService;
+    private $ordersService;
+    private $financeService;
 
-    private ConfigService $configService;
-    private InstanceService $instanceService;
-
-    public function __construct(ConfigService $configService, InstanceService $instanceService)
+    public function __construct(
+        ConfigInterface $config,
+        AuthService     $authService,
+        OrdersService   $ordersService,
+        FinanceService  $financeService
+    )
     {
-        $this->configService = $configService;
-        $this->instanceService = $instanceService;
+        $this->config = $config;
+        $this->authService = $authService;
+        $this->ordersService = $ordersService;
+        $this->financeService = $financeService;
     }
 
-    /**
-     * 获取nacos配置
-     * @param string $namespaceId
-     * @param string $dataId
-     * @param string $group
-     * @return string
-     */
-    public function getConfig(string $namespaceId, string $dataId, string $group): string
+    public function getAccessToken(string $clientId, string $clientSecret)
     {
-        return $this->configService->getConfig($namespaceId, $dataId, $group);
+        $result = json_decode($this->authService->getAuth($clientId, $clientSecret), true);
+        if (!isset($result['access_token'])) {
+            throw new CdiscountException('Cdiscount:获取token异常');
+        }
+        return $result;
     }
 
-    /**
-     * 保存配置文件到本地
-     * @param string $namespaceId
-     * @param string $dataId
-     * @param string $group
-     * @return string
-     */
-    public function saveConfig(string $namespaceId, string $dataId, string $group): string
+    public function setAccessToken(string $accessToken, string $channel = 'cdiscount_api')
     {
-        return $this->configService->saveConfig($namespaceId, $dataId, $group);
+        $this->config->set('http.channels.' . $channel . '.extra.access_token', $accessToken);
     }
 
-    /**
-     * 获取服务实例列表
-     * @param string $namespaceId
-     * @param string $serviceName
-     * @param string $group
-     * @param bool $healthyOnly
-     * @return mixed
-     */
-    public function getInstance(string $namespaceId, string $serviceName, string $group, bool $healthyOnly = true)
+    public function setSellerId(string $sellerId, string $channel = 'cdiscount_api')
     {
-        return $this->instanceService->getInstance($namespaceId, $serviceName, $group, $healthyOnly);
+        $this->config->set('http.channels.' . $channel . '.extra.seller_id', $sellerId);
     }
 
-    /**
-     * 注册服务实例
-     * @param string $namespaceId
-     * @param string $serviceName
-     * @param string $group
-     * @param string $ip
-     * @param int $port
-     * @param $ver
-     * @return bool
-     */
-    public function setInstance(string $namespaceId, string $serviceName, string $group, string $ip, int $port, $ver = '1.0.0'): bool
+
+    public function getOrders(array $params, array $header = [])
     {
-        return $this->instanceService->setInstance($namespaceId, $serviceName, $group, $ip, $port, $ver);
+        return $this->ordersService->getOrders($params, $header);
     }
 
-    /**
-     * 发送服务心跳
-     * @param string $namespaceId
-     * @param string $serviceName
-     * @param string $group
-     * @param string $ip
-     * @param int $port
-     * @param $ver
-     * @return bool
-     */
-    public function setInstanceBeat(string $namespaceId, string $serviceName, string $group, string $ip, int $port, $ver = '1.0.0'): bool
+    public function getPayments(array $params, array $header = [])
     {
-        return $this->instanceService->setInstanceBeat($namespaceId, $serviceName, $group, $ip, $port, $ver);
+        return $this->financeService->getPayments($params, $header);
+
     }
+
+    public function setShipments(string $orderId, array $params, array $header = [])
+    {
+        return $this->ordersService->setShipments($orderId, $params, $header);
+    }
+
 
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Exewen\Cdiscount;
 
 use Exewen\Di\ServiceProvider;
-use Exewen\Nacos\Contract\CdiscountInterface;
+use Exewen\Cdiscount\Contract\CdiscountInterface;
 
 class CdiscountProvider extends ServiceProvider
 {
