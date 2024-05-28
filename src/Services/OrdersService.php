@@ -27,8 +27,8 @@ class OrdersService
 
     public function setShipments(string $orderId, array $params, array $header)
     {
-        $url    = $updatedEndpoint = str_replace('{orderId}', $orderId, $this->setShipmentsUrl);
-        $result = $this->httpClient->get($this->driver, $url, $params, $header);
+        $url    = str_replace('{orderId}', $orderId, $this->setShipmentsUrl);
+        $result = $this->httpClient->post($this->driver, $url, $params, $header, [], 'json');
         return json_decode($result, true);
     }
 
