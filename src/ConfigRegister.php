@@ -51,6 +51,11 @@ class ConfigRegister
                         'extra'           => [
                             'access_token' => null,
                             'seller_id'    => null
+                        ],
+                        'proxy'           => [
+                            'switch' => false,
+                            'http'   => '127.0.0.1:8888',
+                            'https'  => '127.0.0.1:8888'
                         ]
                     ],
                 ]
