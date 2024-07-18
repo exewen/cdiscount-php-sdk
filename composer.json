@@ -42,27 +42,4 @@
         }
     }
 
-    ,"repositories": {
-        "exewen/utils": {
-            "type": "path",
-            "url": "../utils"
-        },
-        "exewen/config": {
-            "type": "path",
-            "url": "../config"
-        },
-        "exewen/di": {
-            "type": "path",
-            "url": "../di"
-        },
-        "exewen/logger": {
-            "type": "path",
-            "url": "../logger"
-        },
-        "exewen/http": {
-            "type": "path",
-            "url": "../http"
-        }
-    }
-
 }
