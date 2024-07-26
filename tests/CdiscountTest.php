@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ExewenTest\Cdiscount;
 
+use Exewen\Cdiscount\CdiscountFacade;
+
 class CdiscountTest extends Base
 {
     /**
@@ -11,9 +13,9 @@ class CdiscountTest extends Base
      */
     public function testGetAuth()
     {
-        $clientId = getenv('CD_CLIENT_ID');
+        $clientId     = getenv('CD_CLIENT_ID');
         $clientSecret = getenv('CD_CLIENT_SECRET');
-        $result = $this->cdiscount->getAccessToken($clientId, $clientSecret);
+        $result       = CdiscountFacade::getAccessToken($clientId, $clientSecret);
         echo $result['access_token'];
         $this->assertNotEmpty($result);
     }
@@ -27,7 +29,7 @@ class CdiscountTest extends Base
         $params = [
             'pageSize' => 1
         ];
-        $result = $this->cdiscount->getOrders($params);
+        $result = CdiscountFacade::getOrders($params);
         var_dump($result);
         $this->assertNotEmpty($result);
     }
@@ -42,7 +44,7 @@ class CdiscountTest extends Base
             'pageSize' => 1
         ];
 
-        $result = $this->cdiscount->getPayments($params);
+        $result = CdiscountFacade::getPayments($params);
         var_dump($result);
         $this->assertNotEmpty($result);
     }
@@ -50,10 +52,10 @@ class CdiscountTest extends Base
     public function testSetShipments()
     {
         $orderId = '';
-        $params = [
+        $params  = [
             'pageSize' => 1
         ];
-        $result = $this->cdiscount->setShipments($orderId, $params);
+        $result  = CdiscountFacade::setShipments($orderId, $params);
         var_dump($result);
         $this->assertNotEmpty($result);
     }
