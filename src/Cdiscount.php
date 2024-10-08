@@ -33,9 +33,10 @@ class Cdiscount implements CdiscountInterface
 
     public function getAccessToken(string $clientId, string $clientSecret)
     {
-        $result = json_decode($this->authService->getAuth($clientId, $clientSecret), true);
+        $response = $this->authService->getAuth($clientId, $clientSecret);
+        $result = json_decode($response, true);
         if (!isset($result['access_token'])) {
-            throw new CdiscountException('Cdiscount:获取token异常');
+            throw new CdiscountException("Cdiscount:获取token异常($response)");
         }
         return $result;
     }
