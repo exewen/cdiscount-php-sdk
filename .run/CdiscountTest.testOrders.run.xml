@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CdiscountTest.testOrders" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <option name="envFilePaths">
+      <list>
+        <option value="$PROJECT_DIR$/../../../../../env/common.env" />
+      </list>
+    </option>
+    <TestRunner class="ExewenTest\Cdiscount\CdiscountTest" file="$PROJECT_DIR$/tests/CdiscountTest.php" method="testOrders" scope="Method" />
+    <method v="2" />
+  </configuration>
+</component>
