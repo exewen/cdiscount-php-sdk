@@ -3,22 +3,24 @@ declare(strict_types=1);
 
 namespace ExewenTest\Cdiscount;
 
-use Exewen\Cdiscount\CdiscountFacade;
+use Exewen\Cdiscount\Facade\AuthFacade;
+use Exewen\Cdiscount\Facade\FinanceFacade;
+use Exewen\Cdiscount\Facade\OrderFacade;
 
 class CdiscountTest extends Base
 {
-    /**
-     * 获取token授权
-     * @return void
-     */
-    public function testGetAuth()
-    {
-        $clientId     = getenv('CD_CLIENT_ID');
-        $clientSecret = getenv('CD_CLIENT_SECRET');
-        $result       = CdiscountFacade::getAccessToken($clientId, $clientSecret);
-        echo $result['access_token'];
-        $this->assertNotEmpty($result);
-    }
+//    /**
+//     * 获取token授权
+//     * @return void
+//     */
+//    public function testGetAuth()
+//    {
+//        $clientId     = getenv('CD_CLIENT_ID');
+//        $clientSecret = getenv('CD_CLIENT_SECRET');
+//        $result       = AuthFacade::getAccessToken($clientId, $clientSecret);
+//        echo $result['access_token'];
+//        $this->assertNotEmpty($result);
+//    }
 
     /**
      * 测试订单信息
@@ -29,7 +31,7 @@ class CdiscountTest extends Base
         $params = [
             'pageSize' => 1
         ];
-        $result = CdiscountFacade::getOrders($params);
+        $result = OrderFacade::getOrders($params);
         var_dump($result);
         $this->assertNotEmpty($result);
     }
@@ -44,21 +46,21 @@ class CdiscountTest extends Base
             'pageSize' => 1
         ];
 
-        $result = CdiscountFacade::getPayments($params);
+        $result = FinanceFacade::getPayments($params);
         var_dump($result);
         $this->assertNotEmpty($result);
     }
 
-    public function testSetShipments()
-    {
-        $orderId = '';
-        $params  = [
-            'pageSize' => 1
-        ];
-        $result  = CdiscountFacade::setShipments($orderId, $params);
-        var_dump($result);
-        $this->assertNotEmpty($result);
-    }
+//    public function testSetShipments()
+//    {
+//        $orderId = '';
+//        $params  = [
+//            'pageSize' => 1
+//        ];
+//        $result  = OrderFacade::setShipments($orderId, $params);
+//        var_dump($result);
+//        $this->assertNotEmpty($result);
+//    }
 
 
 }

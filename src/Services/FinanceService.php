@@ -2,10 +2,11 @@
 
 namespace Exewen\Cdiscount\Services;
 
+use Exewen\Cdiscount\Contract\FinanceInterface;
 use Exewen\Config\Contract\ConfigInterface;
 use Exewen\Http\Contract\HttpClientInterface;
 
-class FinanceService
+class FinanceService implements FinanceInterface
 {
     private $httpClient;
     private $driver;
@@ -18,7 +19,7 @@ class FinanceService
     }
 
 
-    public function getPayments(array $params, array $header)
+    public function getPayments(array $params, array $header = [])
     {
         $result = $this->httpClient->get($this->driver, $this->paymentsUrl, $params, $header);
         return json_decode($result, true);

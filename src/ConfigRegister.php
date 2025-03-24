@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Exewen\Cdiscount;
 
-use Exewen\Cdiscount\Contract\CdiscountInterface;
+use Exewen\Cdiscount\Contract\AuthInterface;
+use Exewen\Cdiscount\Contract\FinanceInterface;
+use Exewen\Cdiscount\Contract\FulfillmentInterface;
+use Exewen\Cdiscount\Contract\OrderInterface;
 use Exewen\Cdiscount\Middleware\AuthMiddleware;
-use Exewen\Http\Middleware\LogMiddleware;
+use Exewen\Cdiscount\Services\AuthService;
+use Exewen\Cdiscount\Services\FinanceService;
+use Exewen\Cdiscount\Services\FulfillmentService;
+use Exewen\Cdiscount\Services\OrdersService;
 
 class ConfigRegister
 {
@@ -14,7 +20,10 @@ class ConfigRegister
     {
         return [
             'dependencies' => [
-                CdiscountInterface::class => Cdiscount::class,
+                AuthInterface::class        => AuthService::class,
+                FinanceInterface::class     => FinanceService::class,
+                FulfillmentInterface::class => FulfillmentService::class,
+                OrderInterface::class       => OrdersService::class,
             ],
 
             'cdiscount' => [

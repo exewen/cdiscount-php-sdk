@@ -2,10 +2,11 @@
 
 namespace Exewen\Cdiscount\Services;
 
+use Exewen\Cdiscount\Contract\OrderInterface;
 use Exewen\Config\Contract\ConfigInterface;
 use Exewen\Http\Contract\HttpClientInterface;
 
-class OrdersService
+class OrdersService implements OrderInterface
 {
     private $httpClient;
     private $driver;
@@ -19,13 +20,13 @@ class OrdersService
     }
 
 
-    public function getOrders(array $params, array $header)
+    public function getOrders(array $params, array $header= [])
     {
         $result = $this->httpClient->get($this->driver, $this->ordersUrl, $params, $header);
         return json_decode($result, true);
     }
 
-    public function setShipments(string $orderId, array $params, array $header)
+    public function setShipments(string $orderId, array $params, array $header= [])
     {
         $url    = str_replace('{orderId}', $orderId, $this->setShipmentsUrl);
         $result = $this->httpClient->post($this->driver, $url, $params, $header, [], 'json');
