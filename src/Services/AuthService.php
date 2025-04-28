@@ -25,20 +25,21 @@ class AuthService implements AuthInterface
 
     public function getAuth(string $clientId, string $clientSecret)
     {
-        return $this->httpClient->post($this->driver, $this->authUrl, [
+        $response = $this->httpClient->post($this->driver, $this->authUrl, [
             'grant_type'    => 'client_credentials',
             'client_id'     => $clientId,
             'client_secret' => $clientSecret,
         ], [], [], 'form_params');
+        return $response->getBody()->getContents();
     }
 
 
     public function getAccessToken(string $clientId, string $clientSecret)
     {
-        $response = $this->getAuth($clientId, $clientSecret);
-        $result = json_decode($response, true);
+        $resultRow = $this->getAuth($clientId, $clientSecret);
+        $result    = json_decode($resultRow, true);
         if (!isset($result['access_token'])) {
-            throw new CdiscountException("Cdiscount:获取token异常($response)");
+            throw new CdiscountException("Cdiscount:获取token异常($resultRow)");
         }
         return $result;
     }

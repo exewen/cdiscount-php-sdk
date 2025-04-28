@@ -13,6 +13,7 @@ use Exewen\Logger\LoggerProvider;
  * @method static array setProducts(array $params, array $header = [])
  * @method static array setInboundShipments(array $params, array $header = [])
  * @method static array setOutboundShipments(array $params, array $header = [])
+ * @method static array getOutboundShipmentsList(array $params, array $header = [])
  * @method static array getOutboundShipments(string $outboundShipmentId, array $params, array $header = [])
  * @method static array cancelOutboundShipments(array $params, array $header = [])
  */

@@ -19,32 +19,46 @@ class FulfillmentService implements FulfillmentInterface
 
     public function setProducts(array $params, array $header = [])
     {
-        $result = $this->httpClient->post($this->driver, '/fulfillment-products', $params, $header);
+        $response = $this->httpClient->post($this->driver, '/seller/v2/fulfillment-products', $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 
     public function setInboundShipments(array $params, array $header = [])
     {
-        $result = $this->httpClient->post($this->driver, '/inbound-shipments', $params, $header);
+        $response = $this->httpClient->post($this->driver, '/seller/v2/inbound-shipments', $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 
     public function setOutboundShipments(array $params, array $header = [])
     {
-        $result = $this->httpClient->post($this->driver, '/outbound-shipments', $params, $header);
+        $response = $this->httpClient->post($this->driver, '/seller/v2/outbound-shipments', $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
+    }
+
+    public function getOutboundShipmentsList(array $params, array $header = [])
+    {
+        $response = $this->httpClient->get($this->driver, '/seller/v2/outbound-shipments', $params, $header);
+        $result   = $response->getBody()->getContents();
+        $result   = json_decode($result, true);
+        $link     = $response->getHeaderLine('Link');
+        return compact('result', 'link');
     }
 
     public function getOutboundShipments(string $outboundShipmentId, array $params, array $header = [])
     {
-        $url    = str_replace('{orderId}', $outboundShipmentId, '/outbound-shipments');
-        $result = $this->httpClient->get($this->driver, $url, $params, $header);
+        $url      = str_replace('{orderId}', $outboundShipmentId, '/seller/v2/outbound-shipments/{orderId}');
+        $response = $this->httpClient->get($this->driver, $url, $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 
     public function cancelOutboundShipments(array $params, array $header = [])
     {
-        $result = $this->httpClient->post($this->driver, '/outbound-cancellation-requests', $params, $header);
+        $response = $this->httpClient->post($this->driver, '/seller/v2/outbound-cancellation-requests', $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 

@@ -13,6 +13,8 @@ interface FulfillmentInterface
 
     public function setOutboundShipments(array $params, array $header = []);
 
+    public function getOutboundShipmentsList(array $params, array $header = []);
+
     public function getOutboundShipments(string $outboundShipmentId, array $params, array $header = []);
 
     public function cancelOutboundShipments(array $params, array $header = []);

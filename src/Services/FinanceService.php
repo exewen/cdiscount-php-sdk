@@ -15,13 +15,14 @@ class FinanceService implements FinanceInterface
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {
         $this->httpClient = $httpClient;
-        $this->driver = $config->get('cdiscount.channel_api');
+        $this->driver     = $config->get('cdiscount.channel_api');
     }
 
 
     public function getPayments(array $params, array $header = [])
     {
-        $result = $this->httpClient->get($this->driver, $this->paymentsUrl, $params, $header);
+        $response = $this->httpClient->get($this->driver, $this->paymentsUrl, $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 

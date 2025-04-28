@@ -13,8 +13,8 @@ class Base extends TestCase
     {
         parent::__construct();
         !defined('BASE_PATH_PKG') && define('BASE_PATH_PKG', dirname(__DIR__, 1));
-        AuthFacade::setAccessToken(getenv('CD_SELLER_ID'));
-        AuthFacade::setSellerId(getenv('CD_ACCESS_TOKEN'));
+        AuthFacade::setSellerId(getenv('CD_SELLER_ID'));
+        AuthFacade::setAccessToken(getenv('CD_ACCESS_TOKEN'));
     }
 
 }

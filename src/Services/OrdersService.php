@@ -20,16 +20,18 @@ class OrdersService implements OrderInterface
     }
 
 
-    public function getOrders(array $params, array $header= [])
+    public function getOrders(array $params, array $header = [])
     {
-        $result = $this->httpClient->get($this->driver, $this->ordersUrl, $params, $header);
+        $response = $this->httpClient->get($this->driver, $this->ordersUrl, $params, $header);
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 
-    public function setShipments(string $orderId, array $params, array $header= [])
+    public function setShipments(string $orderId, array $params, array $header = [])
     {
-        $url    = str_replace('{orderId}', $orderId, $this->setShipmentsUrl);
-        $result = $this->httpClient->post($this->driver, $url, $params, $header, [], 'json');
+        $url      = str_replace('{orderId}', $orderId, $this->setShipmentsUrl);
+        $response = $this->httpClient->post($this->driver, $url, $params, $header, [], 'json');
+        $result   = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 
